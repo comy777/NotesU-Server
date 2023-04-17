@@ -1,0 +1,43 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet", href="/styles/style.css")
+    script(src="https://cdn.jsdelivr.net/npm/sweetalert2@11")
+    title NotesU
+  body 
+    div.m-4(class='h-[100vh]')
+      div.flex.justify-center.items-center.h-full#emailAccount
+        div
+          h1.text-3xl NotesU
+          div#check
+            p Verificando...
+          div 
+          div#verify.hidden
+            p Account verify success
+          div
+        div 
+      div
+    div
+    script.
+      const sendVerify = async () => {
+        const headers = { 'Content-Type': 'application/json' }
+        const resp = await fetch('https://52a4-45-173-6-27.ngrok.io/auth/activated-account', { method: 'GET', headers })
+        const data = await resp.json()
+        if(data.msg){
+          const accountVerify = document.getElementById('verify')
+          const account = document.getElementById('check')
+          account.classList.add('hidden')
+          accountVerify.classList.remove('hidden')
+          Swal.fire({
+            title: 'Account verify success',
+            icon: 'success',
+            confirmButtonText: 'OK',
+            showCloseButton: true
+          }).then((r) => window.close())
+        }
+      }
+      window.addEventListener('load', sendVerify)
+    script

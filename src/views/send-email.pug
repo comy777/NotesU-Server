@@ -1,0 +1,68 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet", href="/styles/style.css")
+    script(src="https://cdn.jsdelivr.net/npm/sweetalert2@11")
+    title NotesU
+  body 
+    div.m-4(class='h-[100vh]')
+      div.flex.justify-center.items-center.h-full#emailAccount
+        form.bg-white.shadow-md.rounded.px-8.pt-6.pb-8.mb-4#restorePassword(autocomplete="off")
+          h1.text-3xl NotesU
+          div.mb-4
+            label.block.text-gray-700.text-sm.font-bold.mb-2 Email
+            input.shadow.appearance-none.border.rounded.w-full.py-2.px-3.text-gray-700.leading-tightclass(focus:outline-none.focus:shadow-outline)(type='text', name='password', value='')#email
+          div
+          div.my-4.hidden#errorMsg
+            p#msgError
+          div
+          div.flex.items-center.justify-between
+            button.bg-blue-500.text-white.font-bold.py-2.px-4.roundedclass(focus:outline-none.focus:shadow-outline.hover:bg-blue-700)(type='submit')#btn Send
+            button
+          div
+        form
+      div
+    div
+    script.
+      const form = document.getElementById('restorePassword')
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault()
+        await sendEmail()
+      })
+
+      const sendEmail = async () => {
+        const errorMsg = document.getElementById('errorMsg')
+        const msgError = document.getElementById('msgError')
+        const btn = document.getElementById('btn')
+        errorMsg.classList.add('hidden')
+        const email = document.getElementById('email').value
+        if(!email) return
+        btn.textContent = 'Sending'
+        btn.setAttribute('disabled', 'true')
+        const cookies = document.cookie
+        const url = cookies ? 'reset-password' : 'verify-email'
+        const headers = { 'Content-Type': 'application/json' }
+        const body = JSON.stringify({ email })
+        const resp = await fetch(`https://52a4-45-173-6-27.ngrok.io/auth/${url}`, { method: 'POST', headers, body })
+        const data = await resp.json()
+        btn.textContent = 'Send'
+        btn.setAttribute('disabled', 'false')
+        if(data.error) {
+          errorMsg.classList.remove('hidden')
+          msgError.textContent = data.error[0] ? data.error[0] : 'Error'
+          return
+        }
+        if(data.msg){
+          Swal.fire({
+            title: data.msg,
+            icon: 'success',
+            confirmButtonText: 'OK',
+            showCloseButton: true
+          }).then((r) => window.close())
+        }
+      }
+    script
