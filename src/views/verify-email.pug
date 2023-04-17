@@ -24,7 +24,7 @@ html(lang="en")
     script.
       const sendVerify = async () => {
         const headers = { 'Content-Type': 'application/json' }
-        const resp = await fetch('https://52a4-45-173-6-27.ngrok.io/auth/activated-account', { method: 'GET', headers })
+        const resp = await fetch('https://notesu-server-ojl6.onrender.com/auth/activated-account', { method: 'GET', headers })
         const data = await resp.json()
         if(data.msg){
           const accountVerify = document.getElementById('verify')

@@ -47,7 +47,7 @@ html(lang="en")
         const url = cookies ? 'reset-password' : 'verify-email'
         const headers = { 'Content-Type': 'application/json' }
         const body = JSON.stringify({ email })
-        const resp = await fetch(`https://52a4-45-173-6-27.ngrok.io/auth/${url}`, { method: 'POST', headers, body })
+        const resp = await fetch(`https://notesu-server-ojl6.onrender.com/auth/${url}`, { method: 'POST', headers, body })
         const data = await resp.json()
         btn.textContent = 'Send'
         btn.setAttribute('disabled', 'false')
