@@ -56,10 +56,7 @@ authRoutes.get('/reset-password-user', (req: Request, res: Response) => veryfyAc
 authRoutes.post('/restore-password', (req: Request, res: Response) => activateAccout(req, res, true))
 
 //Refresh token
-authRoutes.get('/refresh-token/:token', [
-  check('token', 'Token required').notEmpty(),
-  validate
-], refreshToken)
+authRoutes.get('/refresh-token', [validateTokenHeader], refreshToken)
 
 //Get notes by user
 routes.get('', [validateTokenHeader], getNotes)
