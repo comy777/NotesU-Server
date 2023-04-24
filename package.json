@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --files src/index",
-    "html": "copyfiles --up 1 src/public/* dist",
-    "build": "tsc && npm run html",
+    "views": "copyfiles --up 1 src/views/* dist",
+    "publicFolder": "copyfiles --up 1 src/public/styles/* dist",
+    "build": "tsc && npm run publicFolder && npm run views",
     "build:css": "postcss src/public/styles/tailwind.css -o src/public/styles/style.css --watch",
     "start": "node dist/index.js"
   },
