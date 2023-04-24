@@ -1,7 +1,7 @@
 export const emailTemplate = (token: string, resetPassword?: boolean) => {
   const url = resetPassword 
-    ? `http://localhost:5050/auth/reset-password-user?token=${token}`
-    : `http://localhost:5050/auth/verify-account?token=${token}`
+    ? `https://notesu-server-ojl6.onrender.com/auth/reset-password-user?token=${token}`
+    : `https://notesu-server-ojl6.onrender.com/auth/verify-account?token=${token}`
   const message = resetPassword ? 'Reestablecer contasena' : 'Verifique su cuenta'
   const title = resetPassword ? 'Restaurar contrasena' : 'Verifique su cuenta de correo electronico'
   return ` 
