@@ -99,15 +99,8 @@ export const activateAccout = async (req: Request, res: Response, password?: boo
 }
 
 export const refreshToken = async (req: Request, res: Response) => {
-  const { token } = req.params
-  const validate = validateToken(token)
-  let bandera = false
-  if(typeof validate === 'string' && validate !== 'jwt expired') return res.status(400).send({ error: validate })
-  else bandera = true
-  const decoded = decodeToken(token)
-  if(!decoded) return res.status(400).send({ error: 'Token not valid' })
-  const { uuid } = decoded
-  const newToken = bandera ? generateToken({ uuid }, '7d') : token
+  const user = req.user
+  const newToken = generateToken({ uuid: user }, '7d')
   if(!newToken) return res.status(500).send({ error: 'Error server' })
   return res.status(200).send({ token: newToken })
 }

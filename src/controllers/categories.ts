@@ -6,6 +6,11 @@ export const getCategories = async (req: Request, res: Response) => {
   try {
     const user = req.user
     const categories = await Categories.find({ user, state: true })
+    if(categories.length === 0){
+      const newCategory = new Categories({ categorie: 'note', user })
+      if(!newCategory) return res.status(500).send({ error: 'Error save categorie note' })
+      return res.status(200).send({ categories: [newCategory] })
+    }
     return res.status(200).send({ categories })
   } catch (error) {
     console.log(error)
